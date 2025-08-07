@@ -4,82 +4,756 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prof. Julio Franco - Docente & Músico</title>
-    <link rel="stylesheet" href="central_styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --music-gradient: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navegación mejorada */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Hero section mejorada */
+        .hero {
+            background: var(--gradient);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="music" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23music)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-cta:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Sección de perfil mejorada */
+        .profile-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .profile-image {
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .profile-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: var(--bg-light);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Sección de proyectos */
+        .projects-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .courses-section {
+            padding: 5rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--music-gradient);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--music-gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Mensaje inspiracional */
+        .inspiration-section {
+            padding: 5rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inspiration-section::before {
+            content: '♪';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .inspiration-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .inspiration-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer mejorado */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Modales mejorados */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .close {
+            color: var(--text-light);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .profile-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Elementos flotantes de música */
+        .floating-notes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .note {
+            position: absolute;
+            color: rgba(231, 76, 60, 0.1);
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
-            <img src="music_academy/logo.png" alt="Logo" class="nav-logo">
-            <span class="nav-brand">Julio Franco</span>
-        </a>
-        <button class="menu-toggle" aria-label="Menú">☰</button>
-        <ul class="nav-menu">
-            <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
-            <li class="nav-item"><a href="history_music_py/index.html" class="nav-link">Historia de la Música</a></li>
-            <li class="nav-item"><a href="intro_filosofia/index.html" class="nav-link">Introducción a la Filosofía</a></li>
-            <li class="nav-item"><a href="music_academy/index.html" class="nav-link">Academia de Música</a></li>
-        </ul>
+    <!-- Elementos flotantes de música -->
+    <div class="floating-notes" id="floatingNotes"></div>
+
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo">
+                    <i class="fas fa-music"></i>
+                </div>
+                <span>Julio Franco</span>
+            </a>
+            <button class="menu-toggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="#perfil" class="nav-link">Perfil</a></li>
+                <li class="nav-item"><a href="#catedras" class="nav-link">Cátedras</a></li>
+                <li class="nav-item"><a href="#proyectos" class="nav-link">Proyectos</a></li>
+                <li class="nav-item"><a href="music_academy/index.html" class="nav-link">Academia</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <header class="cover">
-        <h1 class="cover-title">Prof. Julio Franco</h1>
-        <p class="cover-subtitle">Docente en el Instituto Superior Nacional de Música</p>
-    </header>
-    
-    <div class="container">
-        <div class="profile-section">
-            <img src="history_music_py/prof.jpeg" alt="Prof. Julio Franco" class="profile-pic">
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1 class="hero-title">Prof. Julio Franco</h1>
+            <p class="hero-subtitle">Docente en el Instituto Superior Nacional de Música</p>
+            <a href="#perfil" class="hero-cta">
+                <i class="fas fa-arrow-down"></i>
+                Conoce más
+            </a>
+        </div>
+    </section>
+
+    <!-- Perfil Section -->
+    <section class="profile-section" id="perfil">
+        <div class="container">
             <div class="profile-content">
-                <h2>Perfil Profesional</h2>
-                <p>Soy el Profesor Julio Franco, licenciado en Filosofía con postgreado en Didáctica Universitaria. Profesor Elemental de Música con énfasis en Violoncello. Estoy comprometido con la formación integral a través del arte y el pensamiento crítico.</p>
-                <p>Como multinstrumentista y fundador de la Orquesta Filarmónica Ipu Paraguay, he cultivado una amplia trayectoria en el ámbito musical, actuando también como arreglador, orquestador y compositor.</p>
-                <p>Además de mi pasión por la música, soy apasionado de la investigación en tecnología, desarrollando competencias en lenguajes de programación como PHP, Python, C, C#, Java y trabajando en el desarrollo de software en varios proyectos.</p>
-            </div>
-        </div>
-        
-        <h2>Mis Cátedras</h2>
-        <div class="card-grid">
-            <div class="card">
-                <h3>Historia de la Música Paraguaya</h3>
-                <p>Un recorrido por las raíces culturales y la evolución del arte sonoro paraguayo a través de los siglos.</p>
-                <div class="card-buttons">
-                    <a href="history_music_py/index.html" class="btn btn-primary">Acceder</a>
-                    <button onclick="openModal('historyModal')" class="btn">Ver Plan</button>
+                <div class="profile-image">
+                    <img src="history_music_py/prof.jpeg" alt="Prof. Julio Franco" class="profile-pic">
                 </div>
-            </div>
-            
-            <div class="card">
-                <h3>Introducción a la Filosofía</h3>
-                <p>Un viaje a través del pensamiento estético desde la Antigüedad hasta nuestros días, enfocado en el arte y la música.</p>
-                <div class="card-buttons">
-                    <a href="intro_filosofia/index.html" class="btn btn-primary">Acceder</a>
-                    <button onclick="openModal('philosophyModal')" class="btn">Ver Plan</button>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>Academia de Música</h3>
-                <p>Formando artistas integrales para el futuro, con cursos de Violín, Violoncello, Guitarra, Canto y Piano.</p>
-                <div class="card-buttons">
-                    <a href="music_academy/index.html" class="btn btn-primary">Acceder</a>
+                <div class="profile-text">
+                    <h2>Perfil Profesional</h2>
+                    <p>Soy el Profesor Julio Franco, licenciado en Filosofía con postgrado en Didáctica Universitaria. Profesor Elemental de Música con énfasis en Violoncello. Estoy comprometido con la formación integral a través del arte y el pensamiento crítico.</p>
+                    <p>Como multinstrumentista y fundador de la Orquesta Filarmónica Ipu Paraguay, he cultivado una amplia trayectoria en el ámbito musical, actuando también como arreglador, orquestador y compositor.</p>
+                    <p>Además de mi pasión por la música, soy apasionado de la investigación en tecnología, desarrollando competencias en múltiples lenguajes de programación.</p>
+                    <div class="skills">
+                        <span class="skill-tag"><i class="fas fa-music"></i> Violoncello</span>
+                        <span class="skill-tag"><i class="fas fa-users"></i> Dirección Orquestal</span>
+                        <span class="skill-tag"><i class="fas fa-graduation-cap"></i> Filosofía</span>
+                        <span class="skill-tag"><i class="fas fa-code"></i> Programación</span>
+                        <span class="skill-tag"><i class="fas fa-edit"></i> Composición</span>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div style="margin-top: 3rem; text-align: center;">
-            <h2>Mensaje a mis Estudiantes</h2>
-            <p style="font-style: italic; max-width: 800px; margin: 0 auto;">"Nuestra meta no es solo dominar un instrumento, sino ser creadores de experiencias que trascienden lo musical y nos conecten profundamente con el mundo que nos rodea."</p>
+    </section>
+
+    <!-- Cátedras Section -->
+    <section class="courses-section" id="catedras">
+        <div class="container">
+            <h2 class="section-title">Mis Cátedras</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3><i class="fas fa-history"></i> Historia de la Música Paraguaya</h3>
+                    <p>Un recorrido por las raíces culturales y la evolución del arte sonoro paraguayo a través de los siglos.</p>
+                    <div class="card-buttons">
+                        <a href="history_music_py/index.html" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Acceder
+                        </a>
+                        <button onclick="openModal('historyModal')" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i> Ver Plan
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-brain"></i> Introducción a la Filosofía</h3>
+                    <p>Un viaje a través del pensamiento estético desde la Antigüedad hasta nuestros días, enfocado en el arte y la música.</p>
+                    <div class="card-buttons">
+                        <a href="intro_filosofia/index.html" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Acceder
+                        </a>
+                        <button onclick="openModal('philosophyModal')" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i> Ver Plan
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <footer>
+    </section>
+
+    <!-- Proyectos Section -->
+    <section class="projects-section" id="proyectos">
+        <div class="container">
+            <h2 class="section-title">Mis Proyectos</h2>
+            <div class="card-grid">
+                <div class="card project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Academia de Música Torre Fuerte</h3>
+                    <p>Iniciativa de educación musical que se alinea perfectamente con la visión del Colegio Torrefuerte. La música, como expresión artística universal, constituye un pilar fundamental en la formación integral de la persona. A través de ella, los estudiantes pueden desarrollar no solo habilidades técnicas específicas, sino también capacidades cognitivas, emocionales y sociales.</p>
+                    <div class="card-buttons">
+                        <a href="https://jufrancopy.github.io/music_academy/" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Visitar Proyecto
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Anecdotario Histórico del Paraguay</h3>
+                    <p>Plataforma de digitalización histórica con IA que utiliza OCR y análisis inteligente para crear un archivo histórico interactivo con línea de tiempo y búsqueda semántica.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">IA</span>
+                        <span class="tech-tag">OCR</span>
+                        <span class="tech-tag">Timeline</span>
+                    </div>
+                    <div class="card-buttons">
+                        <a href="https://anecdotario.thepydeveloper.dev/timeline" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Explorar Timeline
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-notes-musical"></i>
+                    </div>
+                    <h3>TimeLineComposer</h3>
+                    <p>Línea de tiempo interactiva de compositores musicales con sistema CMS colaborativo y panel de administración para gestión de contenido musical.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">CMS</span>
+                        <span class="tech-tag">Colaborativo</span>
+                        <span class="tech-tag">Admin Panel</span>
+                    </div>
+                    <div class="card-buttons">
+                        <a href="https://hmpy.thepydeveloper.dev/" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Ver Compositores
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mensaje Inspiracional -->
+    <section class="inspiration-section">
+        <div class="inspiration-content">
+            <h2 class="section-title" style="color: white; margin-bottom: 2rem;">Mensaje a mis Estudiantes</h2>
+            <p class="inspiration-quote">"Nuestra meta no es solo dominar un instrumento, sino ser creadores de experiencias que trascienden lo musical y nos conecten profundamente con el mundo que nos rodea."</p>
+            <p style="opacity: 0.8;">— Prof. Julio Franco</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="footer-content">
             <h3>Prof. Julio Franco</h3>
             <p>&copy; 2025 - Todos los derechos reservados.</p>
-        </div>
-        <div class="footer-bottom">
-            <p>Sitio web diseñado para la centralización de materiales educativos.</p>
+            <p style="margin-top: 1rem; opacity: 0.7;">Sitio web diseñado para la centralización de materiales educativos.</p>
         </div>
     </footer>
 
@@ -87,43 +761,130 @@
     <div id="historyModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('historyModal')">&times;</span>
-            <h2>Historia de la Música Paraguaya</h2>
+            <h2><i class="fas fa-history"></i> Historia de la Música Paraguaya</h2>
             <p><strong>Curso:</strong> Tercer Año</p>
             <p><strong>Fundamentación:</strong> La asignatura se fundamenta en la premisa de que el ser humano construye su historia inmerso en complejas relaciones sociales que posibilitan la producción de sus mundos sonoros...</p>
-            <!-- Contenido completo del plan... -->
+            <p><strong>Objetivos:</strong></p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li>Analizar la evolución de la música paraguaya</li>
+                <li>Comprender el contexto cultural e histórico</li>
+                <li>Valorar el patrimonio musical nacional</li>
+            </ul>
         </div>
     </div>
     
     <div id="philosophyModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('philosophyModal')">&times;</span>
-            <h2>Introducción a la Filosofía</h2>
+            <h2><i class="fas fa-brain"></i> Introducción a la Filosofía</h2>
             <p><strong>Curso:</strong> Noveno Año</p>
             <p><strong>Fundamentación:</strong> Esta materia tiene como propósito fundamental adentrar al estudiante en los sistemas de pensamiento filosófico que le permitan ubicarse en el amplio espectro intelectual de las corrientes filosóficas estéticas...</p>
-            <!-- Contenido completo del plan... -->
+            <p><strong>Objetivos:</strong></p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li>Desarrollar pensamiento crítico y reflexivo</li>
+                <li>Explorar las corrientes filosóficas estéticas</li>
+                <li>Relacionar filosofía con arte y música</li>
+            </ul>
         </div>
     </div>
     
     <script>
+        // Navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.getElementById('navMenu').classList.toggle('active');
+        });
+
+        // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
         
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
         
+        // Close modal on outside click
         window.onclick = function(event) {
             const modals = document.querySelectorAll('.modal');
             modals.forEach(modal => {
                 if (event.target == modal) {
                     modal.style.display = "none";
+                    document.body.style.overflow = 'auto';
                 }
             });
         }
 
-        document.querySelector('.menu-toggle').addEventListener('click', function () {
-            document.querySelector('.nav-menu').classList.toggle('active');
+        // Floating music notes
+        function createFloatingNote() {
+            const notes = ['♪', '♫', '♩', '♬', '𝄞'];
+            const note = document.createElement('div');
+            note.className = 'note';
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = Math.random() * 100 + '%';
+            note.style.animationDelay = Math.random() * 15 + 's';
+            note.style.animationDuration = (15 + Math.random() * 10) + 's';
+            
+            document.getElementById('floatingNotes').appendChild(note);
+            
+            setTimeout(() => {
+                note.remove();
+            }, 25000);
+        }
+
+        // Create floating notes periodically
+        setInterval(createFloatingNote, 3000);
+
+        // Initialize some notes
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFloatingNote, i * 1000);
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards and project cards
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+        document.querySelectorAll('.project-card').forEach(card => {
+            observer.observe(card);
         });
     </script>
 </body>
